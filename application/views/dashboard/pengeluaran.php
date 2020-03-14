@@ -16,7 +16,7 @@
   		<hr class="sidebar-divider my-0">
 
   		<!-- Nav Item - Dashboard -->
-  		<li class="nav-item active">
+  		<li class="nav-item">
   			<a class="nav-link" href="<?php echo base_url('dashboard') ?>">
   				<i class="fas fa-fw fa-tachometer-alt"></i>
   				<span>Dashboard</span></a>
@@ -30,14 +30,14 @@
   		</div>
 
   		<!-- Nav Item - Charts -->
-  		<li class="nav-item">
+  		<li class="nav-item ">
   			<a class="nav-link" href="<?php echo base_url('pemasukan') ?>">
   				<i class="fas fa-fw fa-chart-area"></i>
   				<span>Pemasukan</span></a>
   		</li>
 
   		<!-- Nav Item - Tables -->
-  		<li class="nav-item">
+  		<li class="nav-item active">
   			<a class="nav-link" href="<?php echo base_url('pengeluaran') ?>">
   				<i class="fas fa-fw fa-table"></i>
   				<span>Pengeluaran</span></a>
@@ -47,9 +47,9 @@
   		<hr class="sidebar-divider d-none d-md-block">
 
   		<!-- Sidebar Toggler (Sidebar) -->
-  		<!-- <div class="text-center d-none d-md-inline">
+  		<div class="text-center d-none d-md-inline">
   			<button class="rounded-circle border-0" id="sidebarToggle"></button>
-  		</div> -->
+  		</div>
 
   	</ul>
   	<!-- End of Sidebar -->
@@ -105,7 +105,7 @@
   			<div class="container-fluid">
 
   				<!-- Page Heading -->
-  				<h1 class="h3 mb-4 text-gray-800">Dashboard</h1>
+  				<h1 class="h3 mb-4 text-gray-800">Pengeluaran</h1>
 
 
 
@@ -209,7 +209,7 @@
   							<!-- <div class="d-none d-sm-block topbar-divider"></div>
 							<li class="nav-item dropdown no-arrow" role="presentation">
 								<div class="nav-item dropdown no-arrow"><a class="btn btn-danger btn-sm d-none d-sm-inline-block" role="button" href="<?php echo site_url('login/logout'); ?>"><i class="fas fa-logout fa-sm text-white-50"></i>&nbsp;Logout</a>
-									 <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu"><a class="dropdown-item" role="presentation" href="#"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" role="presentation" href="#"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Settings</a> -->
+									<!-- <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu"><a class="dropdown-item" role="presentation" href="#"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" role="presentation" href="#"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Settings</a> -->
   							<!-- <a class="dropdown-item" role="presentation" href="#"><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Activity log</a> -->
   							<!-- <div class="dropdown-divider"></div><a class="dropdown-item" role="presentation" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Logout</a> -->
   							<!-- </div>
@@ -223,28 +223,28 @@
 					<h3 class="text-dark mb-0">Dashboard</h3>
 				</div> -->
   								<div class="row">
-  									<div class="col-md-6 col-xl-4 mb-4">
-  										<div class="card shadow border-left-success py-2">
+  									<div class="col-md-6 col-xl-3 mb-4">
+  										<div class="card shadow border-left-primary py-2">
   											<div class="card-body">
   												<div class="row align-items-center no-gutters">
   													<div class="col mr-2">
   														<div class="text-uppercase text-success font-weight-bold text-xs mb-1"><span>Uang Masuk</span></div>
-  														<div class="text-dark font-weight-bold h5 mb-0"><span>Rp. <?php echo $jumlah; ?></span></div>
+  														<div class="text-dark font-weight-bold h5 mb-0"><span>Rp. 50.000</span></div>
   													</div>
-  													<div class="col-auto"><i class="fas fa-arrow-up fa-2x text-success"></i></div>
+  													<div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
   												</div>
   											</div>
   										</div>
   									</div>
-  									<div class="col-md-6 col-xl-4 mb-4">
-  										<div class="card shadow border-left-danger py-2">
+  									<div class="col-md-6 col-xl-3 mb-4">
+  										<div class="card shadow border-left-success py-2">
   											<div class="card-body">
   												<div class="row align-items-center no-gutters">
   													<div class="col mr-2">
   														<div class="text-uppercase text-danger font-weight-bold text-xs mb-1"><span>Uang Keluar</span></div>
   														<div class="text-dark font-weight-bold h5 mb-0"><span>Rp. 40.000</span></div>
   													</div>
-  													<div class="col-auto"><i class="fas fa-arrow-down fa-2x text-danger"></i></div>
+  													<div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
   												</div>
   											</div>
   										</div>
@@ -272,7 +272,7 @@
 							</div>
 						</div>
 					</div> -->
-  									<div class="col-md-6 col-xl-4 mb-4">
+  									<div class="col-md-6 col-xl-3 mb-4">
   										<div class="card shadow border-left-warning py-2">
   											<div class="card-body">
   												<div class="row align-items-center no-gutters">
@@ -280,7 +280,7 @@
   														<div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>Profit/Loss</span></div>
   														<div class="text-dark font-weight-bold h5 mb-0"><span>Rp. 10.000</span></div>
   													</div>
-  													<div class="col-auto"><i class="fas fa-money-check fa-2x text-warning"></i></div>
+  													<div class="col-auto"><i class="fas fa-money-check fa-2x text-gray-300"></i></div>
   												</div>
   											</div>
   										</div>
@@ -451,27 +451,6 @@
   					</div>
   					<!-- <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a> -->
   				</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   			</div>
   			<!-- /.container-fluid -->

@@ -16,7 +16,7 @@
   		<hr class="sidebar-divider my-0">
 
   		<!-- Nav Item - Dashboard -->
-  		<li class="nav-item active">
+  		<li class="nav-item">
   			<a class="nav-link" href="<?php echo base_url('dashboard') ?>">
   				<i class="fas fa-fw fa-tachometer-alt"></i>
   				<span>Dashboard</span></a>
@@ -30,7 +30,7 @@
   		</div>
 
   		<!-- Nav Item - Charts -->
-  		<li class="nav-item">
+  		<li class="nav-item active">
   			<a class="nav-link" href="<?php echo base_url('pemasukan') ?>">
   				<i class="fas fa-fw fa-chart-area"></i>
   				<span>Pemasukan</span></a>
@@ -105,15 +105,48 @@
   			<div class="container-fluid">
 
   				<!-- Page Heading -->
-  				<h1 class="h3 mb-4 text-gray-800">Dashboard</h1>
-
-
-
+  				<h1 class="h3 mb-4 text-gray-800">Input Pemasukan</h1>
   				<div id="wrapper">
 
 
   					<div class="d-flex flex-column" id="content-wrapper">
   						<div id="content">
+
+  							<div class="container" style="margin-top: 40px">
+  								<div class="col-md-12">
+  									<?php echo form_open('login/simpan') ?>
+
+  									<div class="form-group">
+  										<label for="text">Nama</label>
+  										<input type="text" name="nama" class="form-control" placeholder="contoh: leonardo">
+  									</div>
+
+  									<div class="form-group">
+  										<label for="text">Jumlah</label>
+  										<input type="text" name="jumlah" class="form-control" placeholder="contoh: 100.000">
+  									</div>
+
+  									<div class="form-group" style="margin-bottom: 50px">
+  										<label for="text">Tanggal</label>
+  										<input type="date" id="datepicker" name="tanggal" class="form-control">
+									  </div>
+  
+
+  									<!-- <div class="form-group">
+  										<label for="text">Pengarang</label>
+  										<input type="text" name="pengarang" class="form-control">
+  									</div> -->
+
+  									<button type="submit" class="btn btn-md btn-success">Simpan</button>
+  									<button type="reset" class="btn btn-md btn-warning">reset</button>
+  									<?php echo form_close() ?>
+  								</div>
+  							</div>
+  							
+  							<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+							  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
+							  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+							 
   							<!-- <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
 					<div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button> -->
   							<!-- <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
@@ -218,39 +251,39 @@
   							<!-- </ul>
 			</div>
 			</nav> -->
-  							<div class="container-fluid">
-  								<!-- <div class="d-sm-flex justify-content-between align-items-center mb-4">
+  							<!-- <div class="container-fluid"> -->
+  							<!-- <div class="d-sm-flex justify-content-between align-items-center mb-4">
 					<h3 class="text-dark mb-0">Dashboard</h3>
 				</div> -->
-  								<div class="row">
-  									<div class="col-md-6 col-xl-4 mb-4">
-  										<div class="card shadow border-left-success py-2">
+  							<!-- <div class="row">
+  									<div class="col-md-6 col-xl-3 mb-4">
+  										<div class="card shadow border-left-primary py-2">
   											<div class="card-body">
   												<div class="row align-items-center no-gutters">
   													<div class="col mr-2">
   														<div class="text-uppercase text-success font-weight-bold text-xs mb-1"><span>Uang Masuk</span></div>
-  														<div class="text-dark font-weight-bold h5 mb-0"><span>Rp. <?php echo $jumlah; ?></span></div>
+  														<div class="text-dark font-weight-bold h5 mb-0"><span>Rp. 50.000</span></div>
   													</div>
-  													<div class="col-auto"><i class="fas fa-arrow-up fa-2x text-success"></i></div>
+  													<div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
   												</div>
   											</div>
   										</div>
   									</div>
-  									<div class="col-md-6 col-xl-4 mb-4">
-  										<div class="card shadow border-left-danger py-2">
+  									<div class="col-md-6 col-xl-3 mb-4">
+  										<div class="card shadow border-left-success py-2">
   											<div class="card-body">
   												<div class="row align-items-center no-gutters">
   													<div class="col mr-2">
   														<div class="text-uppercase text-danger font-weight-bold text-xs mb-1"><span>Uang Keluar</span></div>
   														<div class="text-dark font-weight-bold h5 mb-0"><span>Rp. 40.000</span></div>
   													</div>
-  													<div class="col-auto"><i class="fas fa-arrow-down fa-2x text-danger"></i></div>
+  													<div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
   												</div>
   											</div>
   										</div>
-  									</div>
+  									</div> -->
 
-  									<!-- <div class="col-md-6 col-xl-3 mb-4">
+  							<!-- <div class="col-md-6 col-xl-3 mb-4">
 						<div class="card shadow border-left-info py-2">
 							<div class="card-body">
 								<div class="row align-items-center no-gutters">
@@ -272,7 +305,7 @@
 							</div>
 						</div>
 					</div> -->
-  									<div class="col-md-6 col-xl-4 mb-4">
+  							<!-- <div class="col-md-6 col-xl-3 mb-4">
   										<div class="card shadow border-left-warning py-2">
   											<div class="card-body">
   												<div class="row align-items-center no-gutters">
@@ -280,13 +313,13 @@
   														<div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>Profit/Loss</span></div>
   														<div class="text-dark font-weight-bold h5 mb-0"><span>Rp. 10.000</span></div>
   													</div>
-  													<div class="col-auto"><i class="fas fa-money-check fa-2x text-warning"></i></div>
+  													<div class="col-auto"><i class="fas fa-money-check fa-2x text-gray-300"></i></div>
   												</div>
   											</div>
   										</div>
   									</div>
-  								</div>
-  								<!-- <div class="row">
+  								</div> -->
+  							<!-- <div class="row">
 					<div class="col-lg-7 col-xl-8">
 						<div class="card shadow mb-4">
 							<div class="card-header d-flex justify-content-between align-items-center">
@@ -441,45 +474,24 @@
 						</div>
 					</div>
 				</div> -->
-  							</div>
   						</div>
-  						<!-- <footer class="bg-white sticky-footer">
+  					</div>
+  					<!-- <footer class="bg-white sticky-footer">
 			<div class="container my-auto">
 				<div class="text-center my-auto copyright"><span>Copyright © Brand 2019</span></div>
 			</div>
 		</footer> -->
-  					</div>
-  					<!-- <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a> -->
   				</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  				<!-- <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a> -->
   			</div>
-  			<!-- /.container-fluid -->
 
   		</div>
-  		<!-- End of Main Content -->
+  		<!-- /.container-fluid -->
+
   	</div>
-  	<!-- End of Content Wrapper -->
+  	<!-- End of Main Content -->
+  </div>
+  <!-- End of Content Wrapper -->
   </div>
   <!-- End of Page Wrapper -->
 

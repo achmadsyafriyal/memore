@@ -16,7 +16,7 @@
   		<hr class="sidebar-divider my-0">
 
   		<!-- Nav Item - Dashboard -->
-  		<li class="nav-item active">
+  		<li class="nav-item">
   			<a class="nav-link" href="<?php echo base_url('dashboard') ?>">
   				<i class="fas fa-fw fa-tachometer-alt"></i>
   				<span>Dashboard</span></a>
@@ -30,7 +30,7 @@
   		</div>
 
   		<!-- Nav Item - Charts -->
-  		<li class="nav-item">
+  		<li class="nav-item active">
   			<a class="nav-link" href="<?php echo base_url('pemasukan') ?>">
   				<i class="fas fa-fw fa-chart-area"></i>
   				<span>Pemasukan</span></a>
@@ -47,9 +47,9 @@
   		<hr class="sidebar-divider d-none d-md-block">
 
   		<!-- Sidebar Toggler (Sidebar) -->
-  		<!-- <div class="text-center d-none d-md-inline">
+  		<div class="text-center d-none d-md-inline">
   			<button class="rounded-circle border-0" id="sidebarToggle"></button>
-  		</div> -->
+  		</div>
 
   	</ul>
   	<!-- End of Sidebar -->
@@ -105,15 +105,105 @@
   			<div class="container-fluid">
 
   				<!-- Page Heading -->
-  				<h1 class="h3 mb-4 text-gray-800">Dashboard</h1>
-
-
-
+  				<h1 class="h3 mb-4 text-gray-800">Pemasukan</h1>
   				<div id="wrapper">
 
 
   					<div class="d-flex flex-column" id="content-wrapper">
   						<div id="content">
+
+  							<div class="container">
+  								<?php echo $this->session->flashdata('notif') ?>
+  								<a href="tambahpemasukan" class="btn btn-md btn-success">Tambah Buku</a>
+  								<hr>
+  								<!-- table -->
+  								<div class="table-responsive">
+  									<table id="table" class="table table-striped table-bordered table-hover">
+  										<thead>
+  											<tr>
+  												<th>No.</th>
+  												<!-- <th>id</th> -->
+  												<th>Nama</th>
+  												<th>Jumlah</th>
+  												<th>Tanggal</th>
+  												<!-- <th>Options</th> -->
+  											</tr>
+  										</thead>
+  										<tbody>
+
+  											<?php
+												$no = 1;
+												foreach ($data_pemasukan as $hasil) {
+												?>
+
+  												<tr>
+  													<td><?php echo $no++ ?></td>
+  													<td><?php echo $hasil->nama ?></td>
+  													<td><?php echo $hasil->jumlah ?></td>
+  													<td><?php echo $hasil->tanggal ?></td>
+  													<td>
+														<button id="<?php echo $hasil->id_pemasukan ?>" onClick="openModal(this.id)" type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Edit</button>
+														<button id="<?php echo $hasil->id_pemasukan ?>" onClick="openModal(this.id)" type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Hapus</button>
+  														<!-- <a href="<?php echo base_url() ?>buku/edit/<?php echo $hasil->id_pemasukan ?>" class="btn btn-sm btn-info">Edit</a>
+  														<a href="<?php echo base_url() ?>buku/hapus/<?php echo $hasil->id_pemasukan ?>" class="btn btn-sm btn-danger">Hapus</a> -->
+  													</td>
+  												</tr>
+
+  											<?php } ?>
+
+  										</tbody>
+  									</table>
+  								</div>
+
+  							</div>
+
+  							<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  							<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  							<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  							<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+  							<!-- <script>
+  								$('#table').DataTable({
+  									autoFill: true
+  								});
+							  </script> -->
+							
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+		  </div>
+		  <div class="form-group" style="display: hidden;">
+            <input type="text" class="form-control" id="recipient-name" hidden>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send message</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+	function openModal(id) {
+		document.getElementById('recipient-name').value = id;
+	}
+	
+</script>
+
   							<!-- <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
 					<div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button> -->
   							<!-- <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
@@ -218,39 +308,39 @@
   							<!-- </ul>
 			</div>
 			</nav> -->
-  							<div class="container-fluid">
-  								<!-- <div class="d-sm-flex justify-content-between align-items-center mb-4">
+  							<!-- <div class="container-fluid"> -->
+  							<!-- <div class="d-sm-flex justify-content-between align-items-center mb-4">
 					<h3 class="text-dark mb-0">Dashboard</h3>
 				</div> -->
-  								<div class="row">
-  									<div class="col-md-6 col-xl-4 mb-4">
-  										<div class="card shadow border-left-success py-2">
+  							<!-- <div class="row">
+  									<div class="col-md-6 col-xl-3 mb-4">
+  										<div class="card shadow border-left-primary py-2">
   											<div class="card-body">
   												<div class="row align-items-center no-gutters">
   													<div class="col mr-2">
   														<div class="text-uppercase text-success font-weight-bold text-xs mb-1"><span>Uang Masuk</span></div>
-  														<div class="text-dark font-weight-bold h5 mb-0"><span>Rp. <?php echo $jumlah; ?></span></div>
+  														<div class="text-dark font-weight-bold h5 mb-0"><span>Rp. 50.000</span></div>
   													</div>
-  													<div class="col-auto"><i class="fas fa-arrow-up fa-2x text-success"></i></div>
+  													<div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
   												</div>
   											</div>
   										</div>
   									</div>
-  									<div class="col-md-6 col-xl-4 mb-4">
-  										<div class="card shadow border-left-danger py-2">
+  									<div class="col-md-6 col-xl-3 mb-4">
+  										<div class="card shadow border-left-success py-2">
   											<div class="card-body">
   												<div class="row align-items-center no-gutters">
   													<div class="col mr-2">
   														<div class="text-uppercase text-danger font-weight-bold text-xs mb-1"><span>Uang Keluar</span></div>
   														<div class="text-dark font-weight-bold h5 mb-0"><span>Rp. 40.000</span></div>
   													</div>
-  													<div class="col-auto"><i class="fas fa-arrow-down fa-2x text-danger"></i></div>
+  													<div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
   												</div>
   											</div>
   										</div>
-  									</div>
+  									</div> -->
 
-  									<!-- <div class="col-md-6 col-xl-3 mb-4">
+  							<!-- <div class="col-md-6 col-xl-3 mb-4">
 						<div class="card shadow border-left-info py-2">
 							<div class="card-body">
 								<div class="row align-items-center no-gutters">
@@ -272,7 +362,7 @@
 							</div>
 						</div>
 					</div> -->
-  									<div class="col-md-6 col-xl-4 mb-4">
+  							<!-- <div class="col-md-6 col-xl-3 mb-4">
   										<div class="card shadow border-left-warning py-2">
   											<div class="card-body">
   												<div class="row align-items-center no-gutters">
@@ -280,13 +370,13 @@
   														<div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>Profit/Loss</span></div>
   														<div class="text-dark font-weight-bold h5 mb-0"><span>Rp. 10.000</span></div>
   													</div>
-  													<div class="col-auto"><i class="fas fa-money-check fa-2x text-warning"></i></div>
+  													<div class="col-auto"><i class="fas fa-money-check fa-2x text-gray-300"></i></div>
   												</div>
   											</div>
   										</div>
   									</div>
-  								</div>
-  								<!-- <div class="row">
+  								</div> -->
+  							<!-- <div class="row">
 					<div class="col-lg-7 col-xl-8">
 						<div class="card shadow mb-4">
 							<div class="card-header d-flex justify-content-between align-items-center">
@@ -441,45 +531,24 @@
 						</div>
 					</div>
 				</div> -->
-  							</div>
   						</div>
-  						<!-- <footer class="bg-white sticky-footer">
+  					</div>
+  					<!-- <footer class="bg-white sticky-footer">
 			<div class="container my-auto">
 				<div class="text-center my-auto copyright"><span>Copyright © Brand 2019</span></div>
 			</div>
 		</footer> -->
-  					</div>
-  					<!-- <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a> -->
   				</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  				<!-- <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a> -->
   			</div>
-  			<!-- /.container-fluid -->
 
   		</div>
-  		<!-- End of Main Content -->
+  		<!-- /.container-fluid -->
+
   	</div>
-  	<!-- End of Content Wrapper -->
+  	<!-- End of Main Content -->
+  </div>
+  <!-- End of Content Wrapper -->
   </div>
   <!-- End of Page Wrapper -->
 
