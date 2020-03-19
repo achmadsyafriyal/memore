@@ -168,9 +168,10 @@ class Login extends CI_Controller
 	{
 		$data = array(
 
-			'nama'       => $this->input->post("nama"),
+			'nama'       => $_SESSION['username'],
 			'jumlah'         => $this->input->post("jumlah"),
 			'tanggal'    => $this->input->post("tanggal"),
+			'detail'   => $this->input->post("detail")
 
 
 		);
@@ -181,8 +182,43 @@ class Login extends CI_Controller
                                                 </div>');
 
 		//redirect
-		redirect('pemasukan/');
+		redirect('pemasukan');
 	}
+
+	function update(){
+
+		
+		$id = $this->input->post('id_edit');
+
+		$data = array(
+			'nama'       => $this->input->post("nama"),
+			'jumlah'         => $this->input->post("jumlah"),
+			'tanggal'    => $this->input->post("tanggal"),
+			'detail'    => $this->input->post("detail"),
+
+		);
+
+		
+	$where = array('id_pemasukan' => $id);
+
+		$this->Login_model->update_data("pemasukan", $data, $where);
+	 
+		$this->session->set_flashdata('notif', '<div class="alert alert-success alert-dismissible"> Success! data berhasil diupdate didatabase.
+		</div>');
+
+redirect('pemasukan');
+}
+
+function hapus(){
+			
+	$id = $this->input->post('id');
+	$where = array('id_pemasukan' => $id);
+	$this->Login_model->hapus_data($where,"pemasukan");
+	
+$this->session->set_flashdata('notif', '<div class="alert alert-success alert-dismissible"> Success! data berhasil disimpan didatabase.
+</div>');
+	redirect('pemasukan');
+}
 
 
 	public function logout()

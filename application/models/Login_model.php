@@ -25,6 +25,36 @@ class Login_model extends CI_Model
 		}
 	}
 
+	function update_product(){
+        $id=$this->input->post('id');
+        $tanggal=$this->input->post('tanggal');
+        $nama=$this->input->post('nama');
+        $detail=$this->input->post('detail');
+        $jumlah=$this->input->post('jumlah');
+ 
+        $this->db->set('id_pemasukan', $id);
+        $this->db->set('tanggal', $tanggal);
+        $this->db->where('nama', $nama);
+        $this->db->set('detail', $detail);
+        $this->db->where('jumlah', $jumlah);
+        $result=$this->db->update('pemasukan');
+        return $result;
+	}
+	
+	function update_data($table,$data,$where){
+		$this->db->where($where);
+		$this->db->update($table,$data);
+		return ($this->db->affected_rows() > 0) ? true : false;
+		// $this->db->update($table, $data, $where);
+	}	
+
+	
+	function hapus_data($where,$table){
+		$this->db->where($where);
+		$this->db->delete($table);
+		return ($this->db->affected_rows() > 0) ? true : false;
+	}
+
 	public function get_all()
 	{
 		$query = $this->db->select("*")
@@ -40,10 +70,5 @@ class Login_model extends CI_Model
 		$result = $this->db->get('pemasukan')->row();  
 		return $result->jumlah;
 
-		// $query = $this->db->select_sum("jumlah")
-		// 	->from('pemasukan')
-		// 	// ->order_by('tanggal', 'DESC')
-		// 	->get();
-		// return $query->result();
 	}
 }
