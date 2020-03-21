@@ -16,7 +16,7 @@
   		<hr class="sidebar-divider my-0">
 
   		<!-- Nav Item - Dashboard -->
-  		<li class="nav-item active">
+  		<li class="nav-item">
   			<a class="nav-link" href="<?php echo base_url('dashboard') ?>">
   				<i class="fas fa-fw fa-tachometer-alt"></i>
   				<span>Dashboard</span></a>
@@ -37,7 +37,7 @@
   		</li>
 
   		<!-- Nav Item - Tables -->
-  		<li class="nav-item">
+  		<li class="nav-item active">
   			<a class="nav-link" href="<?php echo base_url('pengeluaran') ?>">
   				<i class="fas fa-fw fa-table"></i>
   				<span>Pengeluaran</span></a>
@@ -100,104 +100,55 @@
   				</ul>
 
   			</nav>
-  			<!-- End of Topbar -->
-
+              <!-- End of Topbar -->
+    
   			<!-- Begin Page Content -->
   			<div class="container-fluid">
 
   				<!-- Page Heading -->
-  				<h1 class="h3 mb-4 text-gray-800">Dashboard</h1>
-
-
-
+  				<h1 class="h3 mb-4 text-gray-800">Input Pengeluaran</h1>
   				<div id="wrapper">
 
 
   					<div class="d-flex flex-column" id="content-wrapper">
   						<div id="content">
-  					
-  							<div class="container-fluid">
-  						
-  								<div class="row">
-  									<div class="col-md-6 col-xl-4 mb-4">
-  										<div class="card shadow border-left-success py-2">
-  											<div class="card-body">
-  												<div class="row align-items-center no-gutters">
-  													<div class="col mr-2">
-  														<div class="text-uppercase text-success font-weight-bold text-xs mb-1"><span>Uang Masuk</span></div>
-  														<div class="text-dark font-weight-bold h5 mb-0"><span>Rp. <?php echo $jumlahpemasukan; ?></span></div>
-  													</div>
-  													<div class="col-auto"><i class="fas fa-arrow-up fa-2x text-success"></i></div>
-  												</div>
-  											</div>
-  										</div>
-  									</div>
-  									<div class="col-md-6 col-xl-4 mb-4">
-  										<div class="card shadow border-left-danger py-2">
-  											<div class="card-body">
-  												<div class="row align-items-center no-gutters">
-  													<div class="col mr-2">
-  														<div class="text-uppercase text-danger font-weight-bold text-xs mb-1"><span>Uang Keluar</span></div>
-  														<div class="text-dark font-weight-bold h5 mb-0"><span>Rp. <?=$jumlahpengeluaran?></span></div>
-  													</div>
-  													<div class="col-auto"><i class="fas fa-arrow-down fa-2x text-danger"></i></div>
-  												</div>
-  											</div>
-  										</div>
+
+  							<div class="container" style="margin-top: 40px">
+  								<div class="col-md-12">
+  									<?php echo form_open('login/simpanpengeluaran') ?>
+
+  									<div class="form-group">
+  										<label for="text">Detail</label>
+  										<input type="text" name="detail" class="form-control" placeholder="contoh: untuk beli bunga">
   									</div>
 
-  									<div class="col-md-6 col-xl-4 mb-4">
-  										<div class="card shadow border-left-warning py-2">
-  											<div class="card-body">
-  												<div class="row align-items-center no-gutters">
-  													<div class="col mr-2">
-  														<div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>Profit/Loss</span></div>
-  														<div class="text-dark font-weight-bold h5 mb-0"><span>Rp. <?=($jumlahpemasukan-$jumlahpengeluaran)?></span></div>
-  													</div>
-  													<div class="col-auto"><i class="fas fa-money-check fa-2x text-warning"></i></div>
-  												</div>
-  											</div>
-  										</div>
+  									<div class="form-group">
+  										<label for="text">Jumlah</label>
+  										<input type="text" name="jumlah" class="form-control" placeholder="contoh: 100.000">
   									</div>
+
+  									<div class="form-group" style="margin-bottom: 50px">
+  										<label for="text">Tanggal</label>
+  										<input type="date" id="datepicker" name="tanggal" class="form-control">
+									  </div>
+  
+
+  									<!-- <div class="form-group">
+  										<label for="text">Pengarang</label>
+  										<input type="text" name="pengarang" class="form-control">
+  									</div> -->
+
+  									<button type="submit" class="btn btn-md btn-success">Simpan</button>
+  									<button type="reset" class="btn btn-md btn-warning">reset</button>
+  									<?php echo form_close() ?>
   								</div>
-  		
   							</div>
-  						</div>
-  					
-  					</div>
-  					<a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
-  				</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  			</div>
-  			<!-- /.container-fluid -->
-
-  		</div>
-  		<!-- End of Main Content -->
-  	</div>
-  	<!-- End of Content Wrapper -->
-  </div>
-  <!-- End of Page Wrapper -->
+  							
+  							<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+							  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
+							  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+							 
+  						
 
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
@@ -217,7 +168,7 @@
   			<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
   			<div class="modal-footer">
   				<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-  				<a class="btn btn-warning" href="<?= base_url('Login') ?>">Logout</a>
+  				<a class="btn btn-primary" href="<?= base_url('Login') ?>">Logout</a>
   			</div>
   		</div>
   	</div>

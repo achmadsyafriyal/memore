@@ -46,7 +46,8 @@ class Login extends CI_Controller
 
 				'judul'		=> 'Dashboard | Memore',
 				'username' => $_SESSION['username'],
-				'jumlah' => $this->Login_model->get_jumlah(),
+				'jumlahpemasukan' => $this->Login_model->get_jumlah('pemasukan'),
+				'jumlahpengeluaran' => $this->Login_model->get_jumlah('pengeluaran'),
 			);
 				$this->load->view('template/header', $data);
 				$this->load->view('dashboard/owner', $data);
@@ -80,7 +81,8 @@ class Login extends CI_Controller
 
 			'judul'		=> 'Dashboard | Memore',
 			'username' => $_SESSION['username'],
-			'jumlah' => $this->Login_model->get_jumlah(),
+			'jumlahpemasukan' => $this->Login_model->get_jumlah('pemasukan'),
+			'jumlahpengeluaran' => $this->Login_model->get_jumlah('pengeluaran'),
 		);
 		if($_SESSION['level']!=	'admin'){
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
@@ -107,7 +109,7 @@ class Login extends CI_Controller
 
 			'judul'		=> 'Pemasukan | Memore',
 			'username' => $_SESSION['username'],
-			'data_pemasukan' => $this->Login_model->get_all(),
+			'data_pemasukan' => $this->Login_model->get_all('pemasukan'),
 		);
 
 		if($_SESSION['level']!=	'admin'){
@@ -127,6 +129,31 @@ class Login extends CI_Controller
 
 	public function pengeluaran()
 	{
+		$data = array(
+			'judul'		=> 'Pemasukan | Memore',
+			'username' => $_SESSION['username'],
+			'data_pengeluaran' => $this->Login_model->get_all('pengeluaran'),
+		);
+		if($_SESSION['level']!=	'admin'){
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+			Harap login terlebih dahulu! </div>');
+			$data['judul'] = "Login Gagal | Memore";
+			$this->load->view('template/header', $data);
+			$this->load->view('login/login');
+			$this->load->view('template/footer');
+		}
+		else{
+			$var = ['username' => $_SESSION['username']];
+			$data['judul'] = "Pengeluaran | Memore";
+			$this->load->view('template/header', $data);
+			$this->load->view('dashboard/pengeluaran', $var);
+			$this->load->view('template/footer');
+		}
+	}
+
+
+	public function tambahpengeluaran()
+	{
 		if($_SESSION['level']!=	'admin'){
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
 			Harap login terlebih dahulu!
@@ -138,11 +165,33 @@ class Login extends CI_Controller
 		}
 		else{
 		$var = ['username' => $_SESSION['username']];
-		$data['judul'] = "Pengeluaran | Memore";
+		$data['judul'] = "Tambah Pemasukan | Memore";
 		$this->load->view('template/header', $data);
-		$this->load->view('dashboard/pengeluaran', $var);
+		$this->load->view('dashboard/tambahpengeluaran', $var);
 		$this->load->view('template/footer');
-	}}
+	}
+	}
+	
+	public function simpanpengeluaran()
+	{
+		$data = array(
+
+			'nama'       => $_SESSION['username'],
+			'jumlah'         => $this->input->post("jumlah"),
+			'tanggal'    => $this->input->post("tanggal"),
+			'detail'   => $this->input->post("detail")
+
+
+		);
+
+		$this->Login_model->simpan("pengeluaran", $data);
+
+		$this->session->set_flashdata('notif', '<div class="alert alert-success alert-dismissible"> Success! data berhasil disimpan didatabase.
+                                                </div>');
+
+		//redirect
+		redirect('pengeluaran');
+	}
 
 	public function tambahpemasukan()
 	{
@@ -206,7 +255,41 @@ class Login extends CI_Controller
 		$this->session->set_flashdata('notif', '<div class="alert alert-success alert-dismissible"> Success! data berhasil diupdate didatabase.
 		</div>');
 
-redirect('pemasukan');
+	redirect('pemasukan');
+}
+
+function updatepengeluaran(){
+
+		
+	$id = $this->input->post('id_edit');
+
+	$data = array(
+		'nama'       => $this->input->post("nama"),
+		'jumlah'         => $this->input->post("jumlah"),
+		'tanggal'    => $this->input->post("tanggal"),
+		'detail'    => $this->input->post("detail"),
+	);
+
+	
+$where = array('id_pengeluaran' => $id);
+
+	$this->Login_model->update_data("pengeluaran", $data, $where);
+ 
+	$this->session->set_flashdata('notif', '<div class="alert alert-success alert-dismissible"> Success! data berhasil diupdate didatabase.
+	</div>');
+
+redirect('pengeluaran');
+}
+
+function hapuspengeluaran(){
+			
+	$id = $this->input->post('id');
+	$where = array('id_pengeluaran' => $id);
+	$this->Login_model->hapus_data($where,"pengeluaran");
+	
+$this->session->set_flashdata('notif', '<div class="alert alert-success alert-dismissible"> Success! data berhasil disimpan didatabase.
+</div>');
+	redirect('pengeluaran');
 }
 
 function hapus(){

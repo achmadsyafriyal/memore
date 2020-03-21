@@ -55,19 +55,19 @@ class Login_model extends CI_Model
 		return ($this->db->affected_rows() > 0) ? true : false;
 	}
 
-	public function get_all()
+	public function get_all($tabel)
 	{
 		$query = $this->db->select("*")
-			->from('pemasukan')
+			->from($tabel)
 			->order_by('tanggal', 'DESC')
 			->get();
 		return $query->result();
 	}
 
-	public function get_jumlah()
+	public function get_jumlah($tabel)
 	{
 		$this->db->select_sum('jumlah');
-		$result = $this->db->get('pemasukan')->row();  
+		$result = $this->db->get($tabel)->row();  
 		return $result->jumlah;
 
 	}
