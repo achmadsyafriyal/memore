@@ -1,6 +1,12 @@
   <!-- Page Wrapper -->
   <div id="wrapper">
+  <?php
+  function rupiah($angka){
+	
+	$hasil_rupiah = "Rp " . number_format($angka,2,',','.');
+	return $hasil_rupiah;
 
+} ?>
   	<!-- Sidebar -->
   	<ul class="navbar-nav bg-gradient-white sidebar sidebar-light accordion" id="accordionSidebar">
 
@@ -125,7 +131,7 @@
   												<div class="row align-items-center no-gutters">
   													<div class="col mr-2">
   														<div class="text-uppercase text-success font-weight-bold text-xs mb-1"><span>Uang Masuk</span></div>
-  														<div class="text-dark font-weight-bold h5 mb-0"><span>Rp. <?php echo $jumlahpemasukan; ?></span></div>
+  														<div class="text-dark font-weight-bold h5 mb-0"><span> <?php echo rupiah($jumlahpemasukan); ?></span></div>
   													</div>
   													<div class="col-auto"><i class="fas fa-arrow-up fa-2x text-success"></i></div>
   												</div>
@@ -138,7 +144,7 @@
   												<div class="row align-items-center no-gutters">
   													<div class="col mr-2">
   														<div class="text-uppercase text-danger font-weight-bold text-xs mb-1"><span>Uang Keluar</span></div>
-  														<div class="text-dark font-weight-bold h5 mb-0"><span>Rp. <?=$jumlahpengeluaran?></span></div>
+  														<div class="text-dark font-weight-bold h5 mb-0"><span><?=rupiah($jumlahpengeluaran);?></span></div>
   													</div>
   													<div class="col-auto"><i class="fas fa-arrow-down fa-2x text-danger"></i></div>
   												</div>
@@ -152,18 +158,178 @@
   												<div class="row align-items-center no-gutters">
   													<div class="col mr-2">
   														<div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>Profit/Loss</span></div>
-  														<div class="text-dark font-weight-bold h5 mb-0"><span>Rp. <?=($jumlahpemasukan-$jumlahpengeluaran)?></span></div>
+  														<div class="text-dark font-weight-bold h5 mb-0"><span><?=rupiah($jumlahpemasukan-$jumlahpengeluaran)?></span></div>
   													</div>
   													<div class="col-auto"><i class="fas fa-money-check fa-2x text-warning"></i></div>
   												</div>
   											</div>
   										</div>
   									</div>
-  								</div>
-  		
+								  
+								  <div class="col-md-6 col-xl mb-4 ">
+  										<div class="card shadow border-left-info py-2">
+  											<div class="card-body">
+  												<div class="row justify-content-center no-gutters">
+								  <script type="text/javascript" src="chartjs/Chart.js"></script>
+<div style=" height:45vh; width: 90vh; ">
+<canvas id="myChart"></canvas>
+<script>
+Chart.defaults.doughnutLabels = Chart.helpers.clone(Chart.defaults.doughnut);
+
+var helpers = Chart.helpers;
+var defaults = Chart.defaults;
+
+Chart.controllers.doughnutLabels = Chart.controllers.doughnut.extend({
+	updateElement: function(arc, index, reset) {
+    var _this = this;
+    var chart = _this.chart,
+        chartArea = chart.chartArea,
+        opts = chart.options,
+        animationOpts = opts.animation,
+        arcOpts = opts.elements.arc,
+        centerX = (chartArea.left + chartArea.right) / 2,
+        centerY = (chartArea.top + chartArea.bottom) / 2,
+        startAngle = opts.rotation, // non reset case handled later
+        endAngle = opts.rotation, // non reset case handled later
+        dataset = _this.getDataset(),
+        circumference = reset && animationOpts.animateRotate ? 0 : arc.hidden ? 0 : _this.calculateCircumference(dataset.data[index]) * (opts.circumference / (2.0 * Math.PI)),
+        innerRadius = reset && animationOpts.animateScale ? 0 : _this.innerRadius,
+        outerRadius = reset && animationOpts.animateScale ? 0 : _this.outerRadius,
+        custom = arc.custom || {},
+        valueAtIndexOrDefault = helpers.getValueAtIndexOrDefault;
+
+    helpers.extend(arc, {
+      // Utility
+      _datasetIndex: _this.index,
+      _index: index,
+
+      // Desired view properties
+      _model: {
+        x: centerX + chart.offsetX,
+        y: centerY + chart.offsetY,
+        startAngle: startAngle,
+        endAngle: endAngle,
+        circumference: circumference,
+        outerRadius: outerRadius,
+        innerRadius: innerRadius,
+        label: valueAtIndexOrDefault(dataset.label, index, chart.data.labels[index])
+      },
+
+      draw: function () {
+      	var ctx = this._chart.ctx,
+						vm = this._view,
+						sA = vm.startAngle,
+						eA = vm.endAngle,
+						opts = this._chart.config.options;
+				
+					var labelPos = this.tooltipPosition();
+					var segmentLabel = vm.circumference / opts.circumference * 100;
+					
+					ctx.beginPath();
+					
+					ctx.arc(vm.x, vm.y, vm.outerRadius, sA, eA);
+					ctx.arc(vm.x, vm.y, vm.innerRadius, eA, sA, true);
+					
+					ctx.closePath();
+					ctx.strokeStyle = vm.borderColor;
+					ctx.lineWidth = vm.borderWidth;
+					
+					ctx.fillStyle = vm.backgroundColor;
+					
+					ctx.fill();
+					ctx.lineJoin = 'bevel';
+					
+					if (vm.borderWidth) {
+						ctx.stroke();
+					}
+					
+					if (vm.circumference > 0.0015) { // Trying to hide label when it doesn't fit in segment
+						ctx.beginPath();
+						ctx.font = helpers.fontString(opts.defaultFontSize, opts.defaultFontStyle, opts.defaultFontFamily);
+						ctx.fillStyle = "#190707";
+						ctx.textBaseline = "top";
+						ctx.textAlign = "center";
+            
+            // Round percentage in a way that it always adds up to 100%
+						ctx.fillText(segmentLabel.toFixed(2) + "%", labelPos.x, labelPos.y);
+					
+
+          }
+          //display in the center the total sum of all segments
+        //   ctx.fillText('Total = ', vm.x, vm.y-20, 200);
+      }
+    });
+
+    var model = arc._model;
+    model.backgroundColor = custom.backgroundColor ? custom.backgroundColor : valueAtIndexOrDefault(dataset.backgroundColor, index, arcOpts.backgroundColor);
+    model.hoverBackgroundColor = custom.hoverBackgroundColor ? custom.hoverBackgroundColor : valueAtIndexOrDefault(dataset.hoverBackgroundColor, index, arcOpts.hoverBackgroundColor);
+    model.borderWidth = custom.borderWidth ? custom.borderWidth : valueAtIndexOrDefault(dataset.borderWidth, index, arcOpts.borderWidth);
+    model.borderColor = custom.borderColor ? custom.borderColor : valueAtIndexOrDefault(dataset.borderColor, index, arcOpts.borderColor);
+
+    // Set correct angles if not resetting
+    if (!reset || !animationOpts.animateRotate) {
+      if (index === 0) {
+        model.startAngle = opts.rotation;
+      } else {
+        model.startAngle = _this.getMeta().data[index - 1]._model.endAngle;
+      }
+
+      model.endAngle = model.startAngle + model.circumference;
+    }
+
+    arc.pivot();
+  }
+});
+
+var config = {
+  type: 'doughnutLabels',
+  data: {
+    datasets: [{
+      data: [
+        4,
+        61,
+        26,
+      ],
+      backgroundColor: [
+        "#F7464A",
+        "#46BFBD",
+        "#FDB45C",
+        "#949FB1",
+        "#4D5360",
+      ],
+      label: 'Dataset 1'
+    }],
+    labels: [
+      "Data 1 = 4",
+      "Data 2 = 61",
+      "Data 3 = 26"
+    ]
+  },
+  options: {
+			circumference: Math.PI,
+			rotation: 1.0 * Math.PI,
+			responsive: true,
+			legend: { position: 'top',},
+			title: { display: true, text: 'Graphics' },
+			animation: { animateScale: true, animateRotate: true }
+		}
+};
+
+var ctx = document.getElementById("myChart").getContext("2d");
+new Chart(ctx, config);
+</script>
+  												</div>
+  											</div>
+  										</div>
+  									</div>
+								  </div>
+								  
+					
   							</div>
   						</div>
   					
+
+					  
   					</div>
   					<a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
   				</div>
