@@ -43,6 +43,16 @@
   				<span>Pengeluaran</span></a>
   		</li>
 
+		  <!-- Nav Item - Atur Profit -->
+		  <?php if($_SESSION['level']== 'admin'){ ?>
+  		<li class="nav-item">
+  			<a class="nav-link" href="<?php echo base_url('aturprofit') ?>">
+  				<i class="fas fa-fw fa-chart-area"></i>
+				  <span>Atur Profit</span>
+			</a>
+		</li>
+		  <?php } ?>
+
   		<!-- Divider -->
   		<hr class="sidebar-divider d-none d-md-block">
 
@@ -107,9 +117,54 @@
   				<!-- Page Heading -->
   				<h1 class="h3 mb-4 text-gray-800">Pengeluaran</h1>
 
+<<<<<<< Updated upstream
+=======
+  					<div class="d-flex flex-column" id="content-wrapper">
+  						<div id="content">
+
+  							<div class="container">
+  								<?php echo $this->session->flashdata('notif') ?>
+  								<a href="tambahpengeluaran" class="btn btn-md btn-warning">Tambah Pengeluaran</a>
+  								<hr>
+  								<!-- table -->
+  								<div class="table-responsive">
+  									<table id="table" class="table table-striped table-bordered table-hover">
+  										<thead>
+  											<tr>
+  												<th>No.</th>
+  												<!-- <th>id</th> -->
+												  <th>Tanggal</th>
+  												<th>Nama</th>
+  												<th>Jumlah</th>
+												  <th>Detail</th>
+											<?php  if($_SESSION['level']==	'admin'){  ?>
+												  <th>Options</th>
+											<?php } ?>
+  											</tr>
+  										</thead>
+  										<tbody>
+>>>>>>> Stashed changes
 
 
+<<<<<<< Updated upstream
   				<div id="wrapper">
+=======
+  												<tr>
+  													<td><?php echo $no++ ?></td>
+  													<td><?php echo $hasil->tanggal ?></td>
+  													<td><?php echo $hasil->nama ?></td>
+  													<td><?php echo $hasil->jumlah ?></td>
+												  <td><?php echo $hasil->detail ?></td>
+												
+												  <?php  if($_SESSION['level']==	'admin'){  ?>
+  													<td>
+														<button style="width:80px"  id='<?php echo json_encode($hasil); ?>' onClick="openModal(this.id)" type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="#exampleModal">Edit</button>
+														<button style="width:80px" id="<?php echo $hasil->id_pengeluaran ?>"  onClick="deleteModal(this.id)" type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="#Modal_Delete">Hapus</button>
+  														
+													  </td>
+												  <?php } ?>
+  												</tr>
+>>>>>>> Stashed changes
 
 
   					<div class="d-flex flex-column" id="content-wrapper">

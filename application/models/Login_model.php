@@ -34,7 +34,19 @@ class Login_model extends CI_Model
 		return $query->result();
 	}
 
+<<<<<<< Updated upstream
 	public function get_jumlah()
+=======
+	public function get_profit()
+	{
+		$query = $this->db->select("*")
+			->from('profit')
+			->get();
+		return $query->result();
+	}
+
+	public function get_jumlah($tabel)
+>>>>>>> Stashed changes
 	{
 		$this->db->select_sum('jumlah');
 		$result = $this->db->get('pemasukan')->row();  

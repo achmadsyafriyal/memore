@@ -41,7 +41,17 @@
   			<a class="nav-link" href="<?php echo base_url('pengeluaran') ?>">
   				<i class="fas fa-fw fa-table"></i>
   				<span>Pengeluaran</span></a>
-  		</li>
+		  </li>
+
+		  <!-- Nav Item - Atur Profit -->
+		  <?php if($_SESSION['level']== 'admin'){ ?>
+  		<li class="nav-item">
+  			<a class="nav-link" href="<?php echo base_url('aturprofit') ?>">
+  				<i class="fas fa-fw fa-chart-area"></i>
+				  <span>Atur Profit</span>
+			</a>
+		</li>
+		  <?php } ?>
 
   		<!-- Divider -->
   		<hr class="sidebar-divider d-none d-md-block">
@@ -125,8 +135,15 @@
   												<!-- <th>id</th> -->
   												<th>Nama</th>
   												<th>Jumlah</th>
+<<<<<<< Updated upstream
   												<th>Tanggal</th>
   												<th>Options</th>
+=======
+												  <th>Detail</th>
+												<?php  if($_SESSION['level']==	'admin'){  ?>
+												  <th>Options</th>
+												<?php } ?>
+>>>>>>> Stashed changes
   											</tr>
   										</thead>
   										<tbody>
@@ -140,6 +157,7 @@
   													<td><?php echo $no++ ?></td>
   													<td><?php echo $hasil->nama ?></td>
   													<td><?php echo $hasil->jumlah ?></td>
+<<<<<<< Updated upstream
   													<td><?php echo $hasil->tanggal ?></td>
   													<td>
 														<button id="<?php echo $hasil->id_pemasukan ?>" onClick="openModal(this.id)" type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Edit</button>
@@ -147,6 +165,16 @@
   														<!-- <a href="<?php echo base_url() ?>buku/edit/<?php echo $hasil->id_pemasukan ?>" class="btn btn-sm btn-info">Edit</a>
   														<a href="<?php echo base_url() ?>buku/hapus/<?php echo $hasil->id_pemasukan ?>" class="btn btn-sm btn-danger">Hapus</a> -->
   													</td>
+=======
+												  <td><?php echo $hasil->detail ?></td>
+												  <?php  if($_SESSION['level']==	'admin'){  ?>
+  													<td>
+														<button style="width:80px"  id='<?php echo json_encode($hasil); ?>' onClick="openModal(this.id)" type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="#exampleModal">Edit</button>
+														<button style="width:80px" id="<?php echo $hasil->id_pemasukan ?>"  onClick="deleteModal(this.id)" type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="#Modal_Delete">Hapus</button>
+  														
+													  </td>
+												  <?php } ?>
+>>>>>>> Stashed changes
   												</tr>
 
   											<?php } ?>
