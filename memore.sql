@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Apr 2020 pada 08.33
+-- Waktu pembuatan: 15 Apr 2020 pada 05.25
 -- Versi server: 10.1.38-MariaDB
 -- Versi PHP: 7.3.4
 
@@ -41,10 +41,10 @@ CREATE TABLE `pemasukan` (
 --
 
 INSERT INTO `pemasukan` (`id_pemasukan`, `nama`, `jumlah`, `tanggal`, `detail`) VALUES
-(6, 'ahmad', 60123, '2020-03-14', 'Penjualan 1 bunga melati'),
-(10, 'leo', 9000, '2007-04-08', 'Penjualan 1 bunga jawa'),
 (12, 'leo', 10000, '1990-07-08', 'Penjualan 1 bunga mawar'),
-(13, 'leo', 100291, '2112-01-09', 'Penjualan 1 bunga mawar');
+(13, 'leo', 100000, '2112-01-09', 'Penjualan 1 bunga mawar'),
+(14, 'user', 100000, '2020-04-14', 'Pembelian pempek jawa'),
+(16, 'leo', 9000, '2020-04-04', 'Pembelian 1 bunga mawar');
 
 -- --------------------------------------------------------
 
@@ -66,8 +66,28 @@ CREATE TABLE `pengeluaran` (
 
 INSERT INTO `pengeluaran` (`id_pengeluaran`, `nama`, `jumlah`, `tanggal`, `detail`) VALUES
 (2, 'iman', 90000, '2020-01-04', 'Pembelian Plastik'),
-(3, 'leo', 1233, '2020-11-08', 'Pembelian 1 Masker'),
-(4, 'leo', 1333, '2020-04-08', 'Pembelian 1 Tisu');
+(4, 'leo', 1333, '2020-04-08', 'Pembelian 1 Tisu'),
+(6, 'user', 30000, '2021-04-04', 'Jajan Es');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `profit`
+--
+
+CREATE TABLE `profit` (
+  `id_profit` int(11) NOT NULL,
+  `profit_nama` varchar(30) NOT NULL,
+  `profit_nilai` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `profit`
+--
+
+INSERT INTO `profit` (`id_profit`, `profit_nama`, `profit_nilai`) VALUES
+(1, 'Modals', 30),
+(3, 'Simpanan', 30);
 
 -- --------------------------------------------------------
 
@@ -80,7 +100,7 @@ CREATE TABLE `users` (
   `username` varchar(25) NOT NULL,
   `password` varchar(40) NOT NULL,
   `nama` varchar(40) NOT NULL,
-  `level` varchar(5) NOT NULL
+  `level` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -88,7 +108,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `nama`, `level`) VALUES
-(0, 'leo', '123', 'leo', 'admin');
+(0, 'leo', '123', 'leo', 'admin'),
+(1, 'user', 'user', 'user pegawai', 'pegawi');
 
 --
 -- Indexes for dumped tables
@@ -107,6 +128,12 @@ ALTER TABLE `pengeluaran`
   ADD PRIMARY KEY (`id_pengeluaran`);
 
 --
+-- Indeks untuk tabel `profit`
+--
+ALTER TABLE `profit`
+  ADD PRIMARY KEY (`id_profit`);
+
+--
 -- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
@@ -120,13 +147,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `pemasukan`
 --
 ALTER TABLE `pemasukan`
-  MODIFY `id_pemasukan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_pemasukan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT untuk tabel `pengeluaran`
 --
 ALTER TABLE `pengeluaran`
-  MODIFY `id_pengeluaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_pengeluaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT untuk tabel `profit`
+--
+ALTER TABLE `profit`
+  MODIFY `id_profit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
