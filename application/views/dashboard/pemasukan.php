@@ -43,7 +43,15 @@
   			<a class="nav-link" href="<?php echo base_url('pengeluaran') ?>">
   				<i class="fas fa-fw fa-table"></i>
   				<span>Pengeluaran</span></a>
-  		</li>
+		</li>
+		  
+		<?php if($_SESSION['level'] == 'admin'){ ?>
+			<li class="nav-item">
+				<a class="nav-link" href="<?php echo base_url('aturprofit') ?>">
+				<i class="fas fa-hand-holding-usd"></i>
+					<span>Atur Profit</span></a>
+			</li>
+		<?php } ?>
 
   		<!-- Divider -->
   		<hr class="sidebar-divider d-none d-md-block">
@@ -78,15 +86,6 @@
   						</a>
   						<!-- Dropdown - User Information -->
   						<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-  							<a class="dropdown-item" href="#">
-  								<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-  								Profile
-  							</a>
-  							<a class="dropdown-item" href="#">
-  								<i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-  								Activity Log
-  							</a>
-  							<div class="dropdown-divider"></div>
   							<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
   								<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
   								Logout
@@ -124,7 +123,11 @@
   												<th>Nama</th>
   												<th>Jumlah</th>
 												  <th>Detail</th>
-  												<th>Options</th>
+
+												  <?php if($_SESSION['level'] == 'admin') { ?> 
+												  <th>Options</th>
+												  <?php } ?>
+												  
   											</tr>
   										</thead>
   										<tbody>
@@ -140,11 +143,14 @@
   													<td><?php echo $hasil->nama ?></td>
   													<td><?php echo $hasil->jumlah ?></td>
 												  <td><?php echo $hasil->detail ?></td>
+
+												  <?php if($_SESSION['level'] == 'admin'){ ?>
   													<td>
-														<button style="width:80px"  id='<?php echo json_encode($hasil); ?>' onClick="openModal(this.id)" type="button" class="btn btn-warning mr-1" data-toggle="modal" data-target="#exampleModal">Edit</button>
+														<button style="width:80px"  id='<?php echo json_encode($hasil); ?>' onClick="openModal(this.id)" type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="#exampleModal">Edit</button>
 														<button style="width:80px" id="<?php echo $hasil->id_pemasukan ?>"  onClick="deleteModal(this.id)" type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="#Modal_Delete">Hapus</button>
-  														
-  													</td>
+													  </td>
+												  <?php } ?>
+
   												</tr>
 
   											<?php } ?>
@@ -156,10 +162,10 @@
 
   							</div>
 
-  							<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  							<!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   							<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
   							<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-  							<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+  							<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script> -->
 
 			<form action="<?php echo base_url(). 'login/hapus'; ?>" method="post">
             <div class="modal fade" id="Modal_Delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -199,14 +205,16 @@
         </button>
       </div>
       <div class="modal-body">
-		<div class="form-group">
+	  <?php date_default_timezone_set("Asia/Jakarta"); ?>
+	  <input type="hidden" class="form-control" id="tanggal" name="tanggal" value="<?= date("Y-m-d h:i:sa"); ?>">
+		<!-- <div class="form-group">
 			<label for="tanggal" class="col-form-label">Tanggal:</label>
-			<input type="date" class="form-control" id="tanggal" name="tanggal" >
-		  </div>
+			<input type="hidden" class="form-control" id="tanggal" name="tanggal" value="<?= date("Y-m-d h:i:sa") ?>">
+		  </div> -->
           
           <div class="form-group">
 			<label for="nama" class="col-form-label">Nama:</label>
-			<input type="text" class="form-control" id="nama" name="nama" >
+			<input disabled type="text" class="form-control" id="nama" name="nama" value="<?= $_SESSION['username']; ?>">
 		  </div>
 		  
           <div class="form-group">
@@ -239,8 +247,8 @@
 		// var json=$(this).data("href");
 		var obj = JSON.parse(id);
 		document.getElementById('id_edit').value = obj.id_pemasukan;
-		document.getElementById('tanggal').value = obj.tanggal;
-		document.getElementById('nama').value = obj.nama;
+		//document.getElementById('tanggal').value = obj.tanggal;
+		//document.getElementById('nama').value = obj.nama;
 		document.getElementById('jumlah').value = obj.jumlah;
 		document.getElementById('detail').value = obj.detail;
 		console.log(obj);
@@ -274,7 +282,7 @@
   			<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
   			<div class="modal-footer">
   				<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-  				<a class="btn btn-primary" href="<?= base_url('Login') ?>">Logout</a>
+  				<a class="btn btn-primary" href="<?= base_url('Login/logout') ?>">Logout</a>
   			</div>
   		</div>
   	</div>

@@ -54,6 +54,7 @@ $route['tambahpemasukan'] = 'login/tambahpemasukan';
 $route['pemasukan'] = 'login/pemasukan';
 $route['pengeluaran'] = 'login/pengeluaran';
 $route['dashboard'] = 'login/dashboard';
+$route['aturprofit'] = 'login/aturprofit';
 $route['default_controller'] = 'login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

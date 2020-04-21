@@ -41,7 +41,16 @@
   			<a class="nav-link" href="<?php echo base_url('pengeluaran') ?>">
   				<i class="fas fa-fw fa-table"></i>
   				<span>Pengeluaran</span></a>
-  		</li>
+		  </li>
+		  
+		  <?php if($_SESSION['level'] == 'admin'){ ?>
+			<li class="nav-item">
+				<a class="nav-link" href="<?php echo base_url('aturprofit') ?>">
+				<i class="fas fa-hand-holding-usd"></i>
+					<span>Atur Profit</span></a>
+			</li>
+		<?php } ?> 
+
 
   		<!-- Divider -->
   		<hr class="sidebar-divider d-none d-md-block">
@@ -127,10 +136,8 @@
   										<input type="text" name="jumlah" class="form-control" placeholder="contoh: 100.000">
   									</div>
 
-  									<div class="form-group" style="margin-bottom: 50px">
-  										<label for="text">Tanggal</label>
-  										<input type="date" id="datepicker" name="tanggal" class="form-control">
-									  </div>
+  									<?php date_default_timezone_set("Asia/Jakarta"); ?>
+									<input type="hidden" class="form-control" id="tanggal" name="tanggal" value="<?= date("Y-m-d h:i:sa") ?>">
   
 
   									<!-- <div class="form-group">

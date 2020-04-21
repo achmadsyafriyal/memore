@@ -71,4 +71,13 @@ class Login_model extends CI_Model
 		return $result->jumlah;
 
 	}
+
+	public function get_profit()
+	{
+		$query = $this->db->select("*")
+			->from('profit')
+			->get();
+		return $query->result();
+	}
+
 }

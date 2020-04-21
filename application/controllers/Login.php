@@ -16,22 +16,25 @@ class Login extends CI_Controller
 
 	public function index()
 	{
-		
-		$_SESSION['level']='';
-		$_SESSION['username']='';
-		$this->form_validation->set_rules('uname', 'Uname', 'required', [
-			'required' => 'Data required'
-		]);
-		$this->form_validation->set_rules('password', 'Pass', 'required', [
-			'required' => 'Data required'
-		]);
-		if ($this->form_validation->run() == false) {
-			$data['judul'] = "Login | Memore";
-			$this->load->view('template/header', $data);
-			$this->load->view('login/login');
-			$this->load->view('template/footer');
+		if($_SESSION['level'] != ''){ 
+			$this->dashboard();
 		} else {
-			$this->_login();
+			$_SESSION['level']='';
+			$_SESSION['username']='';
+			$this->form_validation->set_rules('uname', 'Uname', 'required', [
+				'required' => 'Data required'
+			]);
+			$this->form_validation->set_rules('password', 'Pass', 'required', [
+				'required' => 'Data required'
+			]);
+			if ($this->form_validation->run() == false) {
+				$data['judul'] = "Login | Memore";
+				$this->load->view('template/header', $data);
+				$this->load->view('login/login');
+				$this->load->view('template/footer');
+			} else {
+				$this->_login();
+			}
 		}
 	}
 
@@ -41,19 +44,23 @@ class Login extends CI_Controller
 		$pass = $this->input->post('password');
 		$var = $this->db->get_where('users', ['username' => $name])->row();
 		if ($var) {
-			if ($var->password == $pass) {	
-				$data = array(
-
-				'judul'		=> 'Dashboard | Memore',
-				'username' => $_SESSION['username'],
-				'jumlahpemasukan' => $this->Login_model->get_jumlah('pemasukan'),
-				'jumlahpengeluaran' => $this->Login_model->get_jumlah('pengeluaran'),
-			);
-				$this->load->view('template/header', $data);
-				$this->load->view('dashboard/owner', $data);
-				$this->load->view('template/footer');
+			if ($var->password == $pass) {
 				$_SESSION['username'] = "$name";
 				$_SESSION['level'] = "$var->level";
+				$this->dashboard();
+
+			// 	$_SESSION['username'] = "$name";
+			// 	$_SESSION['level'] = "$var->level";
+			// 	$data = array(
+
+			// 	'judul'		=> 'Dashboard | Memore',
+			// 	'username' => $_SESSION['username'],
+			// 	'jumlahpemasukan' => $this->Login_model->get_jumlah('pemasukan'),
+			// 	'jumlahpengeluaran' => $this->Login_model->get_jumlah('pengeluaran'),
+			// );
+			// 	$this->load->view('template/header', $data);
+			// 	$this->load->view('dashboard/owner', $data);
+			// 	$this->load->view('template/footer');
 				// $this->session->set_userdata($var);
 			} else {
 				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
@@ -83,8 +90,9 @@ class Login extends CI_Controller
 			'username' => $_SESSION['username'],
 			'jumlahpemasukan' => $this->Login_model->get_jumlah('pemasukan'),
 			'jumlahpengeluaran' => $this->Login_model->get_jumlah('pengeluaran'),
+			'data_profit' => $this->Login_model->get_profit(),
 		);
-		if($_SESSION['level']!=	'admin'){
+		if($_SESSION['level'] == ''){ 
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
 			Harap login terlebih dahulu!
 			</div>');
@@ -112,7 +120,7 @@ class Login extends CI_Controller
 			'data_pemasukan' => $this->Login_model->get_all('pemasukan'),
 		);
 
-		if($_SESSION['level']!=	'admin'){
+		if($_SESSION['level'] == ''){ 
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
 			Harap login terlebih dahulu!
 			</div>');
@@ -134,7 +142,7 @@ class Login extends CI_Controller
 			'username' => $_SESSION['username'],
 			'data_pengeluaran' => $this->Login_model->get_all('pengeluaran'),
 		);
-		if($_SESSION['level']!=	'admin'){
+		if($_SESSION['level'] == ''){ 
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
 			Harap login terlebih dahulu! </div>');
 			$data['judul'] = "Login Gagal | Memore";
@@ -151,10 +159,36 @@ class Login extends CI_Controller
 		}
 	}
 
+	public function aturprofit()
+	{
+		// $var = ['username' => $_SESSION['username']];
+		$data = array(
+			'judul'		=> 'Atur Profit | Memore',
+			'username' => $_SESSION['username'],
+			'data_profit' => $this->Login_model->get_profit(),
+		);
+
+		if($_SESSION['level'] != 'admin'){ 
+			$this->dashboard();
+			// $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+			// Harap login terlebih dahulu!
+			// </div>');
+			// $data['judul'] = "Login Gagal | Memore";
+			// $this->load->view('template/header', $data);
+			// $this->load->view('login/login');
+			// $this->load->view('template/footer');
+		}
+		else{
+			$this->load->view('template/header', $data);
+			$this->load->view('dashboard/aturprofit', $data);
+			$this->load->view('template/footer');
+		}
+	}
+
 
 	public function tambahpengeluaran()
 	{
-		if($_SESSION['level']!=	'admin'){
+		if($_SESSION['level'] == ''){ 
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
 			Harap login terlebih dahulu!
 			</div>');
@@ -195,7 +229,7 @@ class Login extends CI_Controller
 
 	public function tambahpemasukan()
 	{
-		if($_SESSION['level']!=	'admin'){
+		if($_SESSION['level'] == ''){ 
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
 			Harap login terlebih dahulu!
 			</div>');
@@ -240,7 +274,7 @@ class Login extends CI_Controller
 		$id = $this->input->post('id_edit');
 
 		$data = array(
-			'nama'       => $this->input->post("nama"),
+			'nama'       => $_SESSION['username'],
 			'jumlah'         => $this->input->post("jumlah"),
 			'tanggal'    => $this->input->post("tanggal"),
 			'detail'    => $this->input->post("detail"),
@@ -258,13 +292,66 @@ class Login extends CI_Controller
 	redirect('pemasukan');
 }
 
-function updatepengeluaran(){
+// start atur profit
 
-		
+public function tambahaturprofit()
+	{
+		$data = array(
+
+			'profit_nama'         => $this->input->post("tnama"),
+			'profit_nilai'    	  => $this->input->post("tjumlah"),
+
+		);
+
+		$this->Login_model->simpan("profit", $data);
+
+		$this->session->set_flashdata('notif', '<div class="alert alert-success alert-dismissible"> Success! data berhasil disimpan didatabase.
+                                                </div>');
+
+		//redirect
+		redirect('aturprofit');
+	}
+
+
+function updateaturprofit(){
+	    
+			
 	$id = $this->input->post('id_edit');
 
 	$data = array(
-		'nama'       => $this->input->post("nama"),
+		'profit_nama'       => $this->input->post("nama"),
+		'profit_nilai'      => $this->input->post("jumlah"),
+	);
+
+	
+	$where = array('id_profit' => $id);
+
+	$this->Login_model->update_data('profit', $data, $where);
+
+	$this->session->set_flashdata('notif', '<div class="alert alert-success alert-dismissible"> Success! data berhasil diupdate didatabase.
+	</div>');
+
+	redirect('aturprofit');
+}
+
+function hapusaturprofit(){
+				
+	$id = $this->input->post('id');
+	$where = array('id_profit' => $id);
+	$this->Login_model->hapus_data($where,'profit');
+	
+$this->session->set_flashdata('notif', '<div class="alert alert-success alert-dismissible"> Success! data berhasil disimpan didatabase.
+</div>');
+	redirect('aturprofit');
+}
+
+// End atur profit
+
+function updatepengeluaran(){	
+	$id = $this->input->post('id_edit');
+
+	$data = array(
+		'nama'       => $_SESSION['username'],
 		'jumlah'         => $this->input->post("jumlah"),
 		'tanggal'    => $this->input->post("tanggal"),
 		'detail'    => $this->input->post("detail"),

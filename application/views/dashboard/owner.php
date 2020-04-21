@@ -49,6 +49,14 @@
   				<span>Pengeluaran</span></a>
   		</li>
 
+	<?php if($_SESSION['level'] == 'admin'){ ?>
+		<li class="nav-item">
+  			<a class="nav-link" href="<?php echo base_url('aturprofit') ?>">
+			  <i class="fas fa-hand-holding-usd"></i>
+  				<span>Atur Profit</span></a>
+  		</li>
+	<?php } ?>
+
   		<!-- Divider -->
   		<hr class="sidebar-divider d-none d-md-block">
 
@@ -88,15 +96,6 @@
   						</a>
   						<!-- Dropdown - User Information -->
   						<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-  							<a class="dropdown-item" href="#">
-  								<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-  								Profile
-  							</a>
-  							<a class="dropdown-item" href="#">
-  								<i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-  								Activity Log
-  							</a>
-  							<div class="dropdown-divider"></div>
   							<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
   								<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
   								Logout
@@ -165,13 +164,15 @@
   											</div>
   										</div>
   									</div>
-								  
-								  <div class="col-md-6 col-xl mb-4 ">
+
+<!-- Bagian Grafik -->
+<?php if($_SESSION['level'] == 'admin'){ ?> 
+								  <div class="col-md-6 col-xl col-sm-12 mb-4 ">
   										<div class="card shadow border-left-info py-2">
   											<div class="card-body">
   												<div class="row justify-content-center no-gutters">
 								  <script type="text/javascript" src="chartjs/Chart.js"></script>
-<div style=" height:45vh; width: 90vh; ">
+<div style=" height:45vh; width: 90vh;">
 <canvas id="myChart"></canvas>
 <script>
 Chart.defaults.doughnutLabels = Chart.helpers.clone(Chart.defaults.doughnut);
@@ -286,9 +287,9 @@ var config = {
   data: {
     datasets: [{
       data: [
-        4,
-        61,
-        26,
+        <?php foreach ($data_profit as $pt) {
+			echo $pt->profit_nilai, ',';
+		} ?>
       ],
       backgroundColor: [
         "#F7464A",
@@ -300,9 +301,9 @@ var config = {
       label: 'Dataset 1'
     }],
     labels: [
-      "Data 1 = 4",
-      "Data 2 = 61",
-      "Data 3 = 26"
+		<?php foreach ($data_profit as $pt) {
+			echo '"', $pt->profit_nama, ' = ', $pt->profit_nilai, '",';
+		} ?>
     ]
   },
   options: {
@@ -310,7 +311,7 @@ var config = {
 			rotation: 1.0 * Math.PI,
 			responsive: true,
 			legend: { position: 'top',},
-			title: { display: true, text: 'Graphics' },
+			title: { display: true, text: 'Pembagian Profit' },
 			animation: { animateScale: true, animateRotate: true }
 		}
 };
@@ -323,8 +324,10 @@ new Chart(ctx, config);
   										</div>
   									</div>
 								  </div>
+
+<?php } ?>
 								  
-					
+<!-- Akhir bahian Grafik -->
   							</div>
   						</div>
   					
@@ -383,7 +386,7 @@ new Chart(ctx, config);
   			<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
   			<div class="modal-footer">
   				<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-  				<a class="btn btn-warning" href="<?= base_url('Login') ?>">Logout</a>
+  				<a class="btn btn-warning" href="<?= base_url('Login/logout') ?>">Logout</a>
   			</div>
   		</div>
   	</div>
